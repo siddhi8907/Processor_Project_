@@ -107,11 +107,4 @@ RISC201/
   docs/            design documents, assignment, evaluation report, full documentation, ALU documentation
 ```
 
-## Team
 
-| Member | Part |
-|---|---|
-| | ALU (`alu.py`) |
-| | |
-| | |
-| | |
