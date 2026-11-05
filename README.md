@@ -99,6 +99,7 @@ Section 1A of the documentation has the same table and points to the section tha
 ```
 RISC201/
   README.md        this file
+  Project_Documentation.pdf
   evaluate.py      runs every program in every design and writes the report
   src/             the simulator and tools (assembler, CLI, ALU, ...)
   programs/        example assembly programs
@@ -107,11 +108,3 @@ RISC201/
   docs/            design documents, assignment, evaluation report, full documentation, ALU documentation
 ```
 
-## Team
-
-| Member | Part |
-|---|---|
-| | ALU (`alu.py`) |
-| | |
-| | |
-| | |
