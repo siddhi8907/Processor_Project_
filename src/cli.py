@@ -31,7 +31,6 @@ import argparse
 import cmd
 import io
 import os
-import shlex
 import sys
 from typing import Dict, List, Optional
 
@@ -194,10 +193,14 @@ class RiscShell(cmd.Cmd):
     # ------------------------------------------------------------------ program
     def do_load(self, arg):
         """load <file>      assemble (.asm/.s, with macros) or read a .hex/.bin image, then reset"""
-        args = shlex.split(arg)
-        if not args:
+        # The whole argument is the path, so folder names with spaces work with or without
+        # quotes (and Windows backslashes are kept as they are).
+        path = arg.strip()
+        if len(path) >= 2 and path[0] == path[-1] and path[0] in "'\"":
+            path = path[1:-1]
+        if not path:
             raise ValueError("usage: load <file>")
-        path = args[0]
+        path = os.path.expanduser(path)
         if not os.path.exists(path):
             raise ValueError(f"cannot open '{path}'")
         if os.path.splitext(path)[1].lower() in (".asm", ".s"):
@@ -223,7 +226,7 @@ class RiscShell(cmd.Cmd):
         """reload           load the same file again (after editing it)"""
         if not self.path:
             raise ValueError("nothing loaded yet")
-        self.do_load(shlex.quote(self.path))
+        self.do_load(self.path)
 
     def do_source(self, arg):
         """source           show the source after macro / .org expansion"""
@@ -847,7 +850,7 @@ def main(argv=None) -> int:
     sh = RiscShell(sim)
     sh.user_settings.update(chosen)
     if args.program:
-        sh.onecmd(f"load {shlex.quote(args.program)}")
+        sh.onecmd(f"load {args.program}")
     cmds = []
     if args.execute:
         cmds += [c.strip() for c in args.execute.split(";") if c.strip()]

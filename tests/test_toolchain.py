@@ -292,12 +292,36 @@ def t_programs():
     check(not failures, "program expectations failed: " + "; ".join(failures[:5]))
 
 
+def t_paths():
+    # program files in folders whose names contain spaces (e.g. "PROCESSOR DESIGN PROJECT")
+    import shutil
+    import subprocess
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        folder = os.path.join(tmp, "my project folder")
+        os.makedirs(folder)
+        path = os.path.join(folder, "fact 1.asm")
+        shutil.copy(os.path.join(ROOT, "programs", "01_factorial.asm"), path)
+        for form in (path, f'"{path}"', f"'{path}'"):
+            out = io.StringIO()
+            sh = RiscShell(Simulator(), stdout=out)
+            for c in (f"load {form}", "run", "reload", "run"):
+                sh.onecmd(c)
+            check("error:" not in out.getvalue() and sh.sim.read_reg(2) == 3628800,
+                  f"load with spaces in the path failed for {form}:\n{out.getvalue()[-300:]}")
+        r = subprocess.run([sys.executable, os.path.join(ROOT, "src", "cli.py"), path, "-x", "run; reg r2"],
+                           capture_output=True, text=True)
+        check("3628800" in r.stdout and "error:" not in r.stdout,
+              f"cli.py with a path containing spaces failed:\n{r.stdout[-300:]}{r.stderr[-300:]}")
+
+
 def main():
     for name, fn in [("assembler/disassembler round trip", t_roundtrip), ("preprocessor", t_preprocessor),
                      ("static stack checker", t_stack_checker), ("runtime stack protection", t_protection),
                      ("microcode ROMs", t_microcode), ("stack visualizer", t_visualizer),
                      ("CLI debugger", t_cli), ("assembler, CONFIG, microcode errors, ALU choice", t_fixes),
-                     ("programs/*.asm expectations", t_programs)]:
+                     ("programs/*.asm expectations", t_programs),
+                     ("paths with spaces", t_paths)]:
         before = len(FAILS)
         fn()
         print(f"  {'ok  ' if len(FAILS) == before else 'FAIL'}  {name}")

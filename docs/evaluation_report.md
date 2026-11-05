@@ -110,8 +110,8 @@ The vertical unit needs 36% fewer bits of memory, but it needs decoders after th
 
 | adder | wrong results | Python time per operation |
 |---|---|---|
-| kogge | 0 | 38.6 microseconds |
-| ripple | 0 | 11.7 microseconds |
+| kogge | 0 | 14.5 microseconds |
+| ripple | 0 | 4.5 microseconds |
 
 Both adders give identical results in every program (section 1). Kogge-Stone is faster as hardware, but this simulator does not turn that into extra cycles: each operation has a fixed number of cycles. The Python times above only show how slow each *software model* is, not how fast the real circuit would be.
 
@@ -119,10 +119,10 @@ Both adders give identical results in every program (section 1). Kogge-Stone is 
 
 | algorithm | average add/sub per operation | worst case seen | Python time per operation |
 |---|---|---|---|
-| booth | 12.0 | 16 | 7 microseconds |
-| shiftadd | 16.1 | 26 | 8 microseconds |
-| nonrestoring | 32.6 | 33 | 25 microseconds |
-| restoring | 57.6 | 64 | 22 microseconds |
+| booth | 12.0 | 16 | 4 microseconds |
+| shiftadd | 16.1 | 26 | 3 microseconds |
+| nonrestoring | 32.6 | 33 | 8 microseconds |
+| restoring | 57.6 | 64 | 7 microseconds |
 
 Inside the test programs (6-stage, all programs together):
 

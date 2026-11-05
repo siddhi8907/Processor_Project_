@@ -26,10 +26,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 sys.path.insert(0, os.path.join(HERE, "..", "src"))
 
-try:
-    import pipeline_sim as ps
-except ImportError:                                  # file name used in the uploads
-    import testing_pipeline_sim as ps
+import pipeline_sim as ps
 
 import assembler
 import disassembler
