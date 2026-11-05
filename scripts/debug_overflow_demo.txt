@@ -1,0 +1,13 @@
+# Replay with:  python src/cli.py programs/13_overflow_survive.asm -b scripts/debug_overflow_demo.txt
+# 1. stop the moment the stack fault happens and inspect it
+break handler
+run
+exc
+stack
+reg sp
+reg r1
+# 2. let the handler repair things and watch the program continue
+continue
+reg r5
+regs
+stats
