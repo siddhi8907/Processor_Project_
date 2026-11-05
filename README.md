@@ -10,8 +10,8 @@ A small 32-bit processor, built in software. It comes with everything needed to 
 
 You only need **Python 3.8 or newer**. No extra packages.
 
-**Full documentation:** `docs/RISC201_Project_Documentation.pdf` (Word version next to it).
-The ALU and float unit are explained in detail in `docs/RISC201_ALU_Documentation.pdf`.
+**Full documentation:** `Project_Documentation.pdf` (in this folder).
+The ALU and float unit are explained in detail in `docs/ALU_implementation.pdf`.
 
 ## 1. Run your first program
 
@@ -99,13 +99,13 @@ Section 1A of the documentation has the same table and points to the section tha
 ```
 RISC201/
   README.md        this file
-  Project_Documentation.pdf
+  Project_Documentation.pdf   the full documentation
   evaluate.py      runs every program in every design and writes the report
   src/             the simulator and tools (assembler, CLI, ALU, ...)
   programs/        example assembly programs
   scripts/         debugger scripts
   tests/           automatic tests
-  docs/            design documents, assignment, evaluation report, full documentation, ALU documentation
+  docs/            design documents, assignment, evaluation report, ALU documentation
 ```
 
 
